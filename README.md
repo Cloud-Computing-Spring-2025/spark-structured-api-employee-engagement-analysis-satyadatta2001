@@ -24,35 +24,9 @@ Before starting the assignment, ensure you have the following software installed
      spark-submit --version
      ```
 
-4. **Docker & Docker Compose** (Optional):
-   - If you prefer using Docker for setting up Spark, ensure Docker and Docker Compose are installed.
-   - [Docker Installation Guide](https://docs.docker.com/get-docker/)
-   - [Docker Compose Installation Guide](https://docs.docker.com/compose/install/)
-5. **HDFS on Docker** (Optional):
-   - [HDFS, Hive, Hue,Spark](https://github.com/Wittline/apache-spark-docker)
-   - [HDFS on Spark](https://github.com/big-data-europe/docker-hadoop-spark-workbench)
 
 ## **Setup Instructions**
 
-### **1. Project Structure**
-
-Ensure your project directory follows the structure below:
-
-```
-EmployeeEngagementAnalysis/
-├── input/
-│   └── employee_data.csv
-├── outputs/
-│   ├── departments_high_satisfaction.csv
-│   ├── valued_no_suggestions.txt
-│   └── engagement_levels_job_titles.csv
-├── src/
-│   ├── task1_identify_departments_high_satisfaction.py
-│   ├── task2_valued_no_suggestions.py
-│   └── task3_compare_engagement_levels.py
-├── docker-compose.yml
-└── README.md
-```
 
 - **input/**: Contains the `employee_data.csv` dataset.
 - **outputs/**: Directory where the results of each task will be saved.
@@ -66,19 +40,15 @@ You can run the analysis tasks either locally or using Docker.
 
 #### **a. Running Locally**
 
-1. **Navigate to the Project Directory**:
-   ```bash
-   cd EmployeeEngagementAnalysis/
-   ```
 
-2. **Execute Each Task Using `spark-submit`**:
+1. **Execute Each Task Using `spark-submit`**:
    ```bash
    spark-submit src/task1_identify_departments_high_satisfaction.py
    spark-submit src/task2_valued_no_suggestions.py
    spark-submit src/task3_compare_engagement_levels.py
    ```
 
-3. **Verify the Outputs**:
+2. **Verify the Outputs**:
    Check the `outputs/` directory for the resulting files:
    ```bash
    ls outputs/
@@ -97,7 +67,7 @@ You can run the analysis tasks either locally or using Docker.
 
 2. **Access the Spark Master Container**:
    ```bash
-   docker exec -it spark-master bash
+   docker exec -it my-spark-master bash
    ```
 
 3. **Navigate to the Spark Directory**:
@@ -105,17 +75,18 @@ You can run the analysis tasks either locally or using Docker.
    cd /opt/bitnami/spark/
    ```
 
-4. **Run Your PySpark Scripts Using `spark-submit`**:
+4. **Exit the Container**:
+   ```bash
+   exit
+   ```
+
+5. **Run Your PySpark Scripts Using `spark-submit`**:
    ```bash
    spark-submit src/task1_identify_departments_high_satisfaction.py
    spark-submit src/task2_valued_no_suggestions.py
    spark-submit src/task3_compare_engagement_levels.py
    ```
 
-5. **Exit the Container**:
-   ```bash
-   exit
-   ```
 
 6. **Verify the Outputs**:
    On your host machine, check the `outputs/` directory for the resulting files.
@@ -189,10 +160,11 @@ A list of departments meeting the specified criteria, along with the correspondi
 
 **Example Output:**
 
-| Department | Percentage |
-|------------|------------|
-| Finance    | 60%        |
-| Marketing  | 55%        |
+| Department | HighSatisfactionPercentage |
+|------------|--------------------------- |
+| Finance    | 5.88%                      |
+| Marketing  | 9.09%                      |
+| IT         | 15.0%                      |
 
 ---
 
@@ -215,8 +187,8 @@ Insights into the number and proportion of employees who feel valued but aren’
 **Example Output:**
 
 ```
-Number of Employees Feeling Valued without Suggestions: 25
-Proportion: 25%
+Number of Employees Feeling Valued without Suggestions: 18
+Proportion: 18%
 ```
 
 ---
@@ -241,11 +213,11 @@ A comparative analysis showing average Engagement Levels across Job Titles, high
 
 | JobTitle    | AvgEngagementLevel |
 |-------------|--------------------|
-| Manager     | 4.5                |
-| Executive   | 4.2                |
-| Developer   | 3.8                |
-| Analyst     | 3.5                |
-| Coordinator | 3.0                |
-| Support     | 2.8                |
+| Coordinator | 1.82               |
+| Developer   | 2.14               |
+| Executive   | 1.97               |
+| Analyst     | 1.95               |
+| Support     | 1.6                |
+| Manager     | 1.88               |
 
 ---
